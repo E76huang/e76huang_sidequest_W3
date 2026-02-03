@@ -25,26 +25,47 @@ const gameBtn = {
 // ------------------------------
 // drawGame() is called from main.js *only*
 // when currentScreen === "game"
+
 function drawGame() {
   // Set background colour for the game screen
   background(240, 230, 140);
 
   // ---- Title and instructions text ----
-  fill(0); // black text
-  textSize(32);
+  fill(0);
   textAlign(CENTER, CENTER);
-  text("Game Screen", width / 2, 160);
+
+  textSize(32);
+  text("Lost Pet Rescue", width / 2, 160);
 
   textSize(18);
   text(
-    "Click the button (or press ENTER) for a random result.",
+    "You see a lost puppy wandering in the park.\nWhat do you do?",
     width / 2,
     210,
   );
 
+  // BUTTONS FOR CHOICES
+  const helpBtn = {
+    x: 250,
+    y: 450,
+    w: 260,
+    h: 80,
+    label: "HELP THE PUPPY",
+  };
+  const ignoreBtn = {
+    x: 550,
+    y: 450,
+    w: 260,
+    h: 80,
+    label: "IGNORE IT",
+  };
+
+  drawGameButton(helpBtn);
+  drawGameButton(ignoreBtn);
   // ---- Draw the button ----
   // We pass the button object to a helper function
-  drawGameButton(gameBtn);
+  const over = isHover(helpBtn) || isHover(ignoreBtn);
+  cursor(over ? HAND : ARROW);
 
   // ---- Cursor feedback ----
   // If the mouse is over the button, show a hand cursor
