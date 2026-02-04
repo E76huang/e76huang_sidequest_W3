@@ -66,7 +66,6 @@ const decisions = [
 
 function drawGame() {
   background(240, 230, 140);
-
   fill(0);
 
   textAlign(CENTER, CENTER);
