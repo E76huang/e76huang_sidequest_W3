@@ -19,6 +19,44 @@ const gameBtn = {
   h: 90, // height
   label: "PRESS HERE", // text shown on the button
 };
+// Array of game decisions
+const decisions = [
+  {
+    question: "You see a lost puppy. What do you do?",
+    options: [
+      { text: "Pet it", good: true },
+      { text: "Yell at it", good: false },
+    ],
+  },
+  {
+    question: "Do you give the puppy a treat?",
+    options: [
+      { text: "Give it a treat", good: true },
+      { text: "Let it starve", good: false },
+    ],
+  },
+  {
+    question: "Do you give it water?",
+    options: [
+      { text: "Give water", good: true },
+      { text: "Give a mysterious beverage", good: false },
+    ],
+  },
+  {
+    question: "Do you take it on a walk?",
+    options: [
+      { text: "Take it on a walk", good: true },
+      { text: "Ignore it", good: false },
+    ],
+  },
+  {
+    question: "Teach it tricks?",
+    options: [
+      { text: "Teach it fetch", good: true },
+      { text: "No, it's to much of a hassle", good: false },
+    ],
+  },
+];
 
 // ------------------------------
 // Main draw function for this screen
@@ -27,50 +65,41 @@ const gameBtn = {
 // when currentScreen === "game"
 
 function drawGame() {
-  // Set background colour for the game screen
   background(240, 230, 140);
 
-  // ---- Title and instructions text ----
   fill(0);
+
   textAlign(CENTER, CENTER);
 
-  textSize(32);
-  text("Lost Pet Rescue", width / 2, 160);
+  textSize(28);
+  text("Lost Puppy Adventure", width / 2, 100);
 
+  // Show current question
+  const current = decisions[choiceIndex];
+  textSize(22);
+  text(current.question, width / 2, 200);
+
+  // Draw buttons for current options
+  current.options.forEach((opt, i) => {
+    const btn = {
+      x: width / 2,
+      y: 300 + i * 100,
+      w: 400,
+      h: 70,
+      label: opt.text,
+    };
+    drawGameButton(btn);
+    opt._btn = btn; // store the button for input checking
+  });
+
+  // Show tracker on top-right
   textSize(18);
-  text(
-    "You see a lost puppy wandering in the park.\nWhat do you do?",
-    width / 2,
-    210,
-  );
+  textAlign(RIGHT, TOP);
+  text(`Good Choices: ${goodChoices}/${totalChoices}`, width - 20, 20);
 
-  // BUTTONS FOR CHOICES
-  const helpBtn = {
-    x: 250,
-    y: 450,
-    w: 260,
-    h: 80,
-    label: "HELP THE PUPPY",
-  };
-  const ignoreBtn = {
-    x: 550,
-    y: 450,
-    w: 260,
-    h: 80,
-    label: "IGNORE IT",
-  };
-
-  drawGameButton(helpBtn);
-  drawGameButton(ignoreBtn);
-  // ---- Draw the button ----
-  // We pass the button object to a helper function
-  const over = isHover(helpBtn) || isHover(ignoreBtn);
-  cursor(over ? HAND : ARROW);
-
-  // ---- Cursor feedback ----
-  // If the mouse is over the button, show a hand cursor
-  // Otherwise, show the normal arrow cursor
-  cursor(isHover(gameBtn) ? HAND : ARROW);
+  // Cursor feedback
+  let hover = current.options.some((opt) => isHover(opt._btn));
+  cursor(hover ? HAND : ARROW);
 }
 
 // ------------------------------
@@ -111,10 +140,24 @@ function drawGameButton({ x, y, w, h, label }) {
 // This function is called from main.js
 // only when currentScreen === "game"
 function gameMousePressed() {
-  // Only trigger the outcome if the button is clicked
-  if (isHover(gameBtn)) {
-    triggerRandomOutcome();
-  }
+  const current = decisions[choiceIndex];
+  current.options.forEach((opt) => {
+    if (isHover(opt._btn)) {
+      if (opt.good) goodChoices++; // increment for good choices
+      choiceIndex++; // move to next question
+
+      // Check if all questions answered
+      if (choiceIndex >= totalChoices) {
+        // If player got more than half good, good ending
+        if (goodChoices >= totalChoices / 2) currentScreen = "win";
+        else currentScreen = "lose";
+
+        // Reset for next playthrough
+        choiceIndex = 0;
+        goodChoices = 0;
+      }
+    }
+  });
 }
 
 // ------------------------------

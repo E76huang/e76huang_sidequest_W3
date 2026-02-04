@@ -26,7 +26,7 @@ function drawInstr() {
   // \n creates a line break in the text
   // This is useful for simple multi-line instructions
   const lines =
-    "Press the game button.\n" + "You have a chance to win or lose!";
+    "Choose an option each turn, your descions will result in a Good or Bad ending";
 
   text(lines, width / 2, 160);
 

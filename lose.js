@@ -24,7 +24,20 @@ function drawLose() {
   textSize(20);
   text("Click or press R to return to Start.", width / 2, 360);
 }
-
+function drawLose() {
+  background(255, 210, 210);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(40);
+  text("Bad Ending", width / 2, 280);
+  textSize(20);
+  text(
+    "Oh no! The puppy ran away, probably to find someone better.",
+    width / 2,
+    340,
+  );
+  text("Click or press R to return to Start.", width / 2, 400);
+}
 // ------------------------------
 // Mouse input for lose screen
 // ------------------------------
