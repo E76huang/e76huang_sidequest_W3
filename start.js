@@ -18,7 +18,7 @@ function drawStart() {
   fill(30, 50, 60);
   textSize(46);
   textAlign(CENTER, CENTER);
-  text("Lost Puppy adventure", width / 2, 180);
+  text("Lost Puppy Adventure", width / 2, 180);
 
   // ---- Buttons (data only) ----
   // These objects store the position/size/label for each button.
