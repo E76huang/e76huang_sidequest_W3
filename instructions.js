@@ -26,7 +26,7 @@ function drawInstr() {
   // \n creates a line break in the text
   // This is useful for simple multi-line instructions
   const lines =
-    "Choose an option each turn, your descions will result in a Good or Bad ending";
+    "Choose an option each turn, your descions will result in a Good or Bad ending. You must reach 3 'Good Descion Points' to acheive the Good Ending";
 
   text(lines, width / 2, 160);
 
